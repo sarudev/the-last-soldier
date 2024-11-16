@@ -5,14 +5,14 @@ public class PlayerMovement : MonoBehaviour
 {
   public float lookSpeed = .75f;
 
-  [SerializeField] private float walkSpeed = 6f;
-  [SerializeField] private float runSpeed = 12f;
-  [SerializeField] private float jumpPower = 2f;
-  [SerializeField] private float gravity = -20f;
-  [SerializeField] private float lookXLimit = 90f;
-  [SerializeField] private float defaultHeight = 2f;
-  [SerializeField] private float crouchHeight = 1f;
-  [SerializeField] private float crouchSpeed = 3f;
+  private readonly float walkSpeed = 6f;
+  private readonly float runSpeed = 12f;
+  private readonly float jumpPower = 2f;
+  private readonly float gravity = -20f;
+  private readonly float lookXLimit = 90f;
+  private readonly float defaultHeight = 2f;
+  private readonly float crouchHeight = 1f;
+  private readonly float crouchSpeed = 3f;
 
   private float currentSpeed = 0;
   private bool isRunning = false;
@@ -98,8 +98,10 @@ public class PlayerMovement : MonoBehaviour
     if (!isGrounded)
     {
       moveDirection.y += gravity * Time.deltaTime;
-      isFalling = true;
     }
+
+    if (moveDirection.y < 0 && !isGrounded)
+      isFalling = true;
 
     if (!isJumping && !isFalling && isGrounded)
     {
